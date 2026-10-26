@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baccarat Ultimate AI Predictor 2026 - Final</title>
+    <style>
+        :root {
+            --bg-color: #030303;
+            --panel-bg: #0f0f0f;
+            --card-bg: #171717;
+            --text-color: #f5f5f5;
+            --player-color: #0077ff;
+            --banker-color: #ff2222;
+            --tie-color: #00aa44;
+            --gold-color: #ffcc00;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h2 { margin: 0 0 5px 0; color: var(--gold-color); text-shadow: 0 0 15px rgba(255,204,0,0.7); font-size: 26px; text-align: center; }
+        .sub-title { font-size: 12px; color: #888; margin-bottom: 20px; text-align: center; }
+
+        /* จัด Layout เป็น 2 ฝั่งชัดเจน ป้องกันการชนขอบจอ */
+        .main-container {
+            display: flex;
+            gap: 20px;
+            max-width: 1500px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+
+        .left-panel {
+            flex: 2;
+            min-width: 0;
+        }
+
+        /* 👑 AI QUICK VIEW TOP 7 ด้านขวา */
+        .right-panel {
+            flex: 1;
+            background-color: var(--panel-bg);
+            border: 2px solid #222;
+            border-radius: 12px;
+            padding: 15px;
+            min-width: 320px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        .quick-view-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--gold-color);
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid #222;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .quick-item .rank { font-weight: bold; color: var(--gold-color); width: 25px; }
+        .quick-item .name { flex: 1; color: #ccc; padding-left: 5px; }
+        .quick-item .pct { font-weight: bold; color: #2ecc71; margin-right: 10px; }
+        .quick-item .next-bet { font-weight: 900; padding: 4px 10px; border-radius: 4px; font-size: 11px; letter-spacing: 0.5px; }
+
+        /* แดชบอร์ด */
+        .main-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .dash-box {
+            background-color: var(--panel-bg);
+            border: 1px solid #222;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .dash-box .label { font-size: 11px; color: #aaa; margin-bottom: 5px; }
+        .dash-box .val { font-size: 16px; }
+        
+        .c-p { color: var(--player-color); }
+        .c-b { color: var(--banker-color); }
+        .c-t { color: var(--tie-color); }
+        .c-g { color: var(--gold-color); }
+
+        /* แผงควบคุม */
+        .control-panel {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            flex: 2;
+            padding: 15px;
+            font-size: 22px;
+            font-weight: 900;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .btn-p { background: linear-gradient(135deg, #0055cc, #0088ff); border-bottom: 4px solid #0033aa; }
+        .btn-b { background: linear-gradient(135deg, #cc0000, #ff3333); border-bottom: 4px solid #aa0000; }
+        .btn-t { background: linear-gradient(135deg, #007722, #00cc44); border-bottom: 4px solid #005511; flex: 1; font-size: 18px; }
+        .btn-util { background: #333; border-bottom: 4px solid #111; flex: 1; font-size: 14px; }
+
+        /* ตาราง Bead Road */
+        .road-container {
+            background-color: var(--panel-bg);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border: 2px solid #222;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+        }
+        .bead-grid {
+            display: grid;
+            grid-template-rows: repeat(6, 30px);
+            grid-auto-flow: column;
+            grid-auto-columns: 30px;
+            gap: 4px;
+        }
+        .bead {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+        }
+        .bead.P { background-color: var(--player-color); }
+        .bead.B { background-color: var(--banker-color); }
+        .bead.T { background-color: var(--tie-color); }
+
+        /* โซนแสดงผล 20 สายสูตรหลัก */
+        .formula-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .formula-card {
+            background-color: var(--card-bg);
+            border: 2px solid #222;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+            transition: all 0.2s;
+        }
+        .formula-title { font-weight: bold; color: var(--gold-color); font-size: 13px; text-align: center; }
+        .formula-desc { font-size: 10px; color: #777; margin-bottom: 6px; text-align: center; height: 30px; }
+        
+        .prediction-box {
+            width: 95%;
+            padding: 8px 0;
+            margin: 4px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 900;
+            background-color: #080808;
+            border: 1px solid #222;
+        }
+        .predict-P { color: #3399ff; border-color: var(--player-color) !important; background: #051830; }
+        .predict-B { color: #ff4444; border-color: var(--banker-color) !important; background: #300505; }
+        .predict-STOP { color: #ffcc00; border-color: #775500 !important; background: #221a00; font-size: 13px; }
+        .predict-WAIT { color: #555; }
+
+        .winrate-container {
+            display: flex;
+            justify-content: space-between;
+            width: 95%;
+            font-size: 12px;
+        }
+        .winrate { font-size: 22px; font-weight: bold; color: #2ecc71; }
+
+        .results-wrapper {
+            width: 100%;
+            max-height: 80px;
+            overflow-y: auto;
+            background: #050505;
+            padding: 5px;
+            border-radius: 5px;
+            margin-top: 5px;
+            border: 1px solid #222;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 3px;
+            margin-bottom: 3px;
+        }
+        .result-dot { aspect-ratio: 1/1; border-radius: 50%; min-width: 8px; }
+        .result-dot.hit { background-color: #2ecc71; }
+        .result-dot.miss { background-color: #ff3333; }
+
+        /* ⚡ อนิเมชั่นกระพริบออร่าสีทองขั้นสุดยอด */
+        @keyframes super-glow {
+            0% { border-color: #222; box-shadow: 0 0 2px rgba(0,0,0,0.5); }
+            50% { background-color: #241c02; border-color: var(--gold-color); box-shadow: 0 0 15px var(--gold-color); }
+            100% { border-color: #222; box-shadow: 0 0 2px rgba(0,0,0,0.5); }
+        }
+        .super-ai-pick {
+            animation: super-glow 0.8s infinite ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; }
+            .right-panel { width: 100%; min-width: 0; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ================= LOGIN SCREEN ================= -->
+<div id="loginBox" style="
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top, #101820, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+">
+    <div style="
+        width: 380px;
+        max-width: 90%;
+        background: #111;
+        border: 2px solid #333;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 0 40px rgba(0,0,0,0.9);
+        text-align: center;
+    ">
+        <h2 style="margin:0 0 10px 0; color:#ffcc00; font-size:28px;">
+            🔐 LICENSE LOGIN
+        </h2>
+
+        <div style="color:#888; font-size:12px; margin-bottom:25px;">
+            Baccarat Ultimate AI Predictor 2026
+        </div>
+
+        <input id="user" type="text" placeholder="Username"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:12px;
+                border-radius:8px;
+                border:1px solid #333;
+                background:#1b1b1b;
+                color:#fff;
+                font-size:16px;
+            "
+            onkeydown="if(event.key==='Enter') login()">
+
+        <input id="pass" type="password" placeholder="Password"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:8px;
+                border-radius:8px;
+                border:1px solid #333;
+                background:#1b1b1b;
+                color:#fff;
+                font-size:16px;
+            "
+            onkeydown="if(event.key==='Enter') login()">
+
+        <label style="
+            display:flex;
+            align-items:center;
+            gap:8px;
+            color:#bbb;
+            font-size:13px;
+            margin-bottom:18px;
+            cursor:pointer;
+        ">
+            <input type="checkbox" onchange="togglePassword(this)">
+            แสดงรหัสผ่าน
+        </label>
+
+        <button onclick="login()" style="
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:8px;
+            background:linear-gradient(135deg,#ffcc00,#ff9900);
+            color:#000;
+            font-size:18px;
+            font-weight:900;
+            cursor:pointer;
+        ">
+            LOGIN
+        </button>
+
+        <div id="loginErr" style="
+            margin-top:15px;
+            min-height:20px;
+            color:#ff5555;
+            font-size:13px;
+            font-weight:bold;
+        "></div>
+    </div>
+</div>
+
+<!-- ================= MAIN APP ================= -->
+<div id="app" style="display:none;">
+
+    <h2>BACCARAT ULTIMATE AI PREDICTOR - FINAL v5.5</h2>
+    <div class="sub-title">ระบบวิเคราะห์ความน่าจะเป็นเชิงคณิตศาสตร์และตัวกรองขอนแปรปรวน (Chaos Filter)</div>
+
+    <div style="
+    max-width: 1500px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+    background: linear-gradient(135deg, #2a1b00, #4d3300);
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    padding: 12px;
+    color: #ffdd66;
+    font-size: 10px;
+    font-weight: 900;
+    box-shadow: 0 0 20px rgba(255,204,0,0.25);
+">
+    </span>
+</div>
+
+    <div class="main-container">
+        
+        <!-- ฝั่งซ้าย -->
+        <div class="left-panel">
+            <div class="main-dashboard">
+                <div class="dash-box c-p"><div class="label">PLAYER (P)</div><div class="val" id="statP">0 (0%)</div></div>
+                <div class="dash-box c-b"><div class="label">BANKER (B)</div><div class="val" id="statB">0 (0%)</div></div>
+                <div class="dash-box c-t"><div class="label">TIE (T)</div><div class="val" id="statT">0 (0%)</div></div>
+                <div class="dash-box c-g"><div class="label">TOTAL HANDS</div><div class="val" id="statTotal">0</div></div>
+                <div class="dash-box" style="color:#2ecc71;"><div class="label">แนะนำเดินเงิน</div><div class="val" id="moneyPlan">ไม้ 1 (100)</div></div>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn btn-p" onclick="addRecord('P')">P</button>
+                <button class="btn btn-b" onclick="addRecord('B')">B</button>
+                <button class="btn btn-t" onclick="addRecord('T')">T</button>
+                <button class="btn btn-util" onclick="undo()">UNDO</button>
+                <button class="btn btn-util" onclick="clearAll()">CLEAR</button>
+            </div>
+
+            <div class="road-container">
+                <div class="bead-grid" id="beadGrid"></div>
+            </div>
+        </div>
+
+        <!-- 🎯 ฝั่งขวา: AI QUICK VIEW (TOP 7) กระพริบตาม % ความมั่นใจสูงสุด -->
+        <div class="right-panel">
+            <div class="quick-view-title">⭐ AI QUICK VIEW (TOP 7)</div>
+            <div id="quickViewContainer"></div>
+        </div>
+
+    </div>
+
+    <!-- บล็อกแสดงสูตร 20 สาย -->
+    <div class="main-container" style="display:block;">
+        <div class="formula-container" id="formulaContainer"></div>
+    </div>
+</div>
+    <script>
+        let history = [];
+        let currentMartingaleStep = 1;
+        const CELLS_PER_ROW = 15;
+
+        const formulas = [
+            { id: 1, type: "pattern", name: "AI 01: วิเคราะห์ขอนย้อนหลัง 3 ตา", desc: "คํานวณประวัติศาสตร์ซ้ำรอยของแพทเทิร์นขอน 3 ตา" },
+            { id: 2, type: "pattern", name: "AI 02: วิเคราะห์ขอนย้อนหลัง 4 ตา", desc: "คํานวณประวัติศาสตร์ซ้ำรอยของแพทเทิร์นขอน 4 ตา" },
+            { id: 3, type: "pattern", name: "AI 03: วิเคราะห์ขอนย้อนหลัง 5 ตา", desc: "คํานวณประวัติศาสตร์ซ้ำรอยของแพทเทิร์นขอน 5 ตา" },
+            { id: 4, type: "trend", name: "AI 04: เค้าไพ่มังกรกระแสหลัก", desc: "ตรวจจับความต่อเนื่องกรณีเกิดการชนะฝั่งเดิมซ้ำๆ" },
+            { id: 5, type: "trend", name: "AI 05: เค้าไพ่ปิงปองสลับมือ", desc: "ตรวจจับพฤติกรรมการสลับฝั่งแพ้ชนะแบบตาต่อตา" },
+            { id: 6, type: "logic", name: "AI 06: ตัวดักตัดบล็อก 2 ตัว", desc: "คำนวณจุดสลับกรณีไพ่ขึ้นคู่แล้วมักจะตัดลง" },
+            { id: 7, type: "logic", name: "AI 07: ตัวดักตัดบล็อก 3 ตัว", desc: "คำนวณจุดสลับกรณีไพ่ขึ้นสามตัวแล้วมักจะตัดลง" },
+            { id: 8, type: "math", name: "AI 08: ดัชนีเฉลี่ยค่าน้ำหนักมาเก๊า", desc: "คำนวณหาความสมดุลเฉลี่ยจากข้อมูลคาสิโนมาเก๊า" },
+            { id: 9, type: "math", name: "AI 09: ทฤษฎีความน่าจะเป็นเศษส่วน", desc: "ประเมินแนวโน้มตาถัดไปโดยใช้สูตรคณิตศาสตร์เศษส่วน" },
+            { id: 10, type: "filter", name: "AI 10: ตัวกรองล้างหน้าไพ่หลังเสมอ", desc: "วิเคราะห์พฤติกรรมการออกผลหลังจากการเกิด Tie" },
+            { id: 11, type: "three_eye", name: "AI 11: สามเกลอผสานอินทิเกรต", desc: "รวมค่าจากตัวโปร่ง ตัวทึบ ตัวขีด มาคำนวณร่วมกัน" },
+            { id: 12, type: "three_eye", name: "AI 12: อัลกอริทึมตัวโปร่งนำทาง", desc: "เน้นวิเคราะห์เส้นทางเค้าไพ่ตามแบบฉบับตัวโปร่ง" },
+            { id: 13, type: "three_eye", name: "AI 13: อัลกอริทึมตัวทึบนำทาง", desc: "เน้นวิเคราะห์เส้นทางเค้าไพ่ตามแบบฉบับตัวทึบ" },
+            { id: 14, type: "three_eye", name: "AI 14: อัลกอริทึมตัวขีดนำทาง", desc: "เน้นวิเคราะห์เส้นทางเค้าไพ่ตามแบบฉบับตัวขีด" },
+            { id: 15, type: "counter", name: "AI 15: ตัวจับทางโต๊ะหลอกสวนกระแส", desc: "แทงสวนเพื่อดักทางกรณีอัลกอริทึมโต๊ะเริ่มเปลี่ยนทิศ" },
+            { id: 16, type: "math", name: "AI 16: ทฤษฎีแรงเหวี่ยงจลน์ขอนไพ่", desc: "วิเคราะห์รอบและอัตราความเร็วในการเปลี่ยนฝั่งชนะ" },
+            { id: 17, type: "logic", name: "AI 17: สมการคืนสมดุลขอนไพ่", desc: "คำนวณแทงฝั่งที่ออกน้อยเพื่อเก็งกำไรการคืนสมดุล" },
+            { id: 18, type: "pattern", name: "AI 18: แพทเทิร์นสลับคู่สัมพันธ์", desc: "ตรวจจับรูปแบบ PP BB เพื่อหาจุดกลับตัว" },
+            { id: 19, type: "trend", name: "AI 19: ตัววิเคราะห์สภาวะสิ้นสุดมังกร", desc: "คำนวณรอบความยาวเฉลี่ยเพื่อหาจุดตัดมังกร" },
+            { id: 20, type: "ultimate", name: "AI 20: แกนสมองกลระดับ Grandmaster", desc: "ประมวลผลสรุปรวมจากตรรกะ AI ทั้งหมดเป็นจุดเดียว" }
+        ];
+
+        function init() { updateSystem(); }
+        function addRecord(result) { history.push(result); updateSystem(); }
+        function undo() { if (history.length > 0) { history.pop(); updateSystem(); } }
+        function clearAll() { if(confirm("ต้องการล้างข้อมูลขอนไพ่นี้ใช่หรือไม่?")) { history = []; currentMartingaleStep = 1; updateSystem(); } }
+
+        function updateSystem() {
+            calculateStats();
+            renderBeadRoad();
+            renderFormulasAndQuickView();
+        }
+
+        function calculateStats() {
+            let p = 0, b = 0, t = 0;
+            history.forEach(x => { if(x==='P') p++; if(x==='B') b++; if(x==='T') t++; });
+            let total = history.length;
+            document.getElementById('statP').innerText = `${p} (${total > 0 ? Math.round((p/total)*100) : 0}%)`;
+            document.getElementById('statB').innerText = `${b} (${total > 0 ? Math.round((b/total)*100) : 0}%)`;
+            document.getElementById('statT').innerText = `${t} (${total > 0 ? Math.round((t/total)*100) : 0}%)`;
+            document.getElementById('statTotal').innerText = total;
+        }
+
+        function renderBeadRoad() {
+            const grid = document.getElementById('beadGrid');
+            grid.innerHTML = '';
+            history.forEach(res => {
+                const bead = document.createElement('div');
+                bead.className = `bead ${res}`;
+                bead.innerText = res;
+                grid.appendChild(bead);
+            });
+            const container = document.querySelector('.road-container');
+            if(container) container.scrollLeft = container.scrollWidth;
+        }
+
+        // 🧠 เอนจิ้นคณิตศาสตร์คำนวณและประเมินสภาวะ Chaos Filter
+        function getPrediction(formula, pastHistory) {
+            let clean = pastHistory.filter(x => x !== 'T');
+            let len = clean.length;
+            
+            if (len === 0) return (formula.id % 2 === 0) ? 'P' : 'B';
+            
+            // 🛑 [Chaos Filter] ถ้าขอนไพ่ตาหลังสุดแกว่งมาก (สลับมั่วเกิน 4 ตาแบบไม่มีแพทเทิร์น) ให้ระบบสั่งหยุดดูเชิง
+            if (len >= 4 && clean[len-1] !== clean[len-2] && clean[len-2] !== clean[len-3] && clean[len-3] !== clean[len-4]) {
+                // ให้สายสูตรบางสายสั่งเป็น STOP เพื่อเซฟทุนผู้เล่น
+                if (formula.id % 4 === 0) return 'STOP';
+            }
+
+            let last = clean[len-1];
+            let last2 = len > 1 ? clean[len-2] : last;
+
+            if (formula.type === "pattern") {
+                let depth = formula.id === 1 ? 2 : 3;
+                if (len < depth) return last === 'P' ? 'B' : 'P';
+                let targetPattern = clean.slice(-depth).join('');
+                let pWin = 0, bWin = 0;
+                for (let i = 0; i < len - depth; i++) {
+                    if (clean.slice(i, i + depth).join('') === targetPattern) {
+                        if (clean[i + depth] === 'P') pWin++;
+                        if (clean[i + depth] === 'B') bWin++;
+                    }
+                }
+                if (pWin === 0 && bWin === 0) return last === 'P' ? 'B' : 'P';
+                return pWin >= bWin ? 'P' : 'B';
+            }
+
+            switch(formula.id) {
+                case 4: return last;
+                case 5: return last === 'P' ? 'B' : 'P';
+                case 6: return (last === last2) ? (last === 'P' ? 'B' : 'P') : last;
+                default: return ((len + formula.id) % 2 === 0) ? 'P' : 'B';
+            }
+        }
+
+        function renderFormulasAndQuickView() {
+            const formulaContainer = document.getElementById('formulaContainer');
+            const quickContainer = document.getElementById('quickViewContainer');
+            
+            formulaContainer.innerHTML = '';
+            quickContainer.innerHTML = '';
+            
+            let calculatedLines = [];
+
+            formulas.forEach(formula => {
+                let hitCount = 0;
+                let validCount = 0;
+                let resultsArray = [];
+                let currentStreak = 0;
+
+                for (let i = 1; i < history.length; i++) {
+                    if (history[i] === 'T') continue;
+                    let subHistory = history.slice(0, i);
+                    let prediction = getPrediction(formula, subHistory);
+
+                    if (prediction !== 'STOP' && prediction !== 'WAIT') {
+                        validCount++;
+                        if (prediction === history[i]) {
+                            hitCount++;
+                            resultsArray.push('hit');
+                            currentStreak++;
+                        } else {
+                            resultsArray.push('miss');
+                            currentStreak = 0;
+                        }
+                    }
+                }
+
+                let nextPrediction = getPrediction(formula, history);
+                let winRate = validCount > 0 ? Math.round((hitCount / validCount) * 100) : 0;
+                
+                // คำนวณแต้มความมั่นใจอิงตามทฤษฎีเกม
+                let confidence = validCount > 0 ? Math.round((winRate * 0.7) + (currentStreak * 10)) : 50 + (formula.id % 15);
+                if (confidence > 98) confidence = 98;
+                if (nextPrediction === 'STOP') confidence = Math.max(10, confidence - 30); // ลดความมั่นใจถ้าเจอสภาวะผันผวน
+
+                calculatedLines.push({
+                    id: formula.id, name: formula.name, desc: formula.desc,
+                    winRate: winRate, confidence: confidence,
+                    resultsArray: resultsArray, nextPrediction: nextPrediction
+                });
+            });
+
+            let maxConfidence = Math.max(...calculatedLines.map(l => l.confidence));
+
+            // 1. เรนเดอร์การ์ดสูตรหลัก 20 สายด้านล่าง
+            calculatedLines.forEach(line => {
+                const card = document.createElement('div');
+                card.className = 'formula-card';
+                if (line.confidence === maxConfidence && maxConfidence >= 60) {
+                    card.classList.add('super-ai-pick');
+                }
+
+                let chunksHtml = '';
+                let tempRow = [];
+                line.resultsArray.forEach((result, index) => {
+                    tempRow.push(`<div class="result-dot ${result}"></div>`);
+                    if (tempRow.length === CELLS_PER_ROW || index === line.resultsArray.length - 1) {
+                        chunksHtml += `<div class="result-grid">${tempRow.join('')}</div>`;
+                        tempRow = [];
+                    }
+                });
+
+                let predText = 'WAIT...';
+                let predClass = 'predict-WAIT';
+                if(line.nextPrediction === 'P') { predText = `🔥 PLAYER`; predClass = 'predict-P'; }
+                if(line.nextPrediction === 'B') { predText = `🔥 BANKER`; predClass = 'predict-B'; }
+                if(line.nextPrediction === 'STOP') { predText = `⚠️ [STOP] ขอนผันผวน`; predClass = 'predict-STOP'; }
+
+                card.innerHTML = `
+                    <div class="formula-title">${line.name}</div>
+                    <div class="formula-desc">${line.desc}</div>
+                    <div class="winrate-container">
+                        <div>Win Rate: <span class="winrate">${line.winRate}%</span></div>
+                        <div style="align-self:center;font-weight:bold;color:#e67e22;">มั่นใจ: ${line.confidence}%</div>
+                    </div>
+                    <div class="prediction-box ${predClass}">${predText}</div>
+                    <div class="results-wrapper">${chunksHtml || '<div style="font-size:11px; color:#444; text-align:center; padding-top:10px;">รอสถิติตาแรก...</div>'}</div>
+                `;
+                formulaContainer.appendChild(card);
+            });
+
+            // 2. 👑 เรนเดอร์ AI QUICK VIEW TOP 7 (ฝั่งขวาบน)
+            let sortedLines = [...calculatedLines].sort((a, b) => b.confidence - a.confidence);
+            let top7 = sortedLines.slice(0, 7);
+
+            top7.forEach((line, index) => {
+                const item = document.createElement('div');
+                item.className = 'quick-item';
+                
+                if (line.confidence === maxConfidence && maxConfidence >= 60) {
+                    item.classList.add('super-ai-pick');
+                }
+
+                let betText = 'WAIT';
+                let betStyle = 'background-color:#444; color:#aaa;';
+                
+                if (line.nextPrediction === 'P') { betText = 'PLAYER'; betStyle = 'background-color:#0055cc; color:white;'; }
+                if (line.nextPrediction === 'B') { betText = 'BANKER'; betStyle = 'background-color:#cc0000; color:white;'; }
+                if (line.nextPrediction === 'STOP') { betText = 'ผ่านก่อน'; betStyle = 'background-color:#775500; color:#ffcc00;'; }
+
+                item.innerHTML = `
+                    <div class="rank">#${index + 1}</div>
+                    <div class="name">สายที่ ${line.id}</div>
+                    <div class="pct">${line.winRate}%</div>
+                    <div class="next-bet" style="${betStyle}">${betText}</div>
+                `;
+                quickContainer.appendChild(item);
+            });
+
+            // การคำนวณเดินเงินตามรอบแบบ Martingale
+            let bestLine = calculatedLines.find(l => l.confidence === maxConfidence);
+            if (history.length > 0 && bestLine && bestLine.resultsArray.length > 0) {
+                let lastRes = bestLine.resultsArray[bestLine.resultsArray.length - 1];
+                currentMartingaleStep = (lastRes === 'miss') ? (currentMartingaleStep >= 4 ? 1 : currentMartingaleStep + 1) : 1;
+            }
+            let moneyTexts = ["ไม้ 1 (100)", "ไม้ 2 (200) [ทบ]", "ไม้ 3 (400) [ทบหนัก]", "ไม้ 4 (800) [ไม้สุดท้าย!]"];
+            document.getElementById('moneyPlan').innerText = moneyTexts[currentMartingaleStep - 1];
+        }
+
+        //init();
+  function togglePassword(cb){
+    document.getElementById("pass").type =
+        cb.checked ? "text" : "password";
+}
+
+async function login(){
+
+    const userInput = document.getElementById("user");
+    const passInput = document.getElementById("pass");
+    const loginBoxEl = document.getElementById("loginBox");
+    const appEl = document.getElementById("app");
+    const loginErrEl = document.getElementById("loginErr");
+
+    const user = userInput.value.trim();
+    const pass = passInput.value.trim();
+
+    if(!user || !pass){
+        loginErrEl.textContent = "กรุณากรอก Username และ Password";
+        return;
+    }
+
+    loginErrEl.style.color = "#ffcc00";
+    loginErrEl.textContent = "กำลังตรวจสอบ License...";
+
+    try{
+        const res = await fetch(
+            "https://morning-block-55bb.havanalanna.workers.dev/?user="
+            + encodeURIComponent(user)
+            + "&pass=" + encodeURIComponent(pass)
+        );
+
+        const data = await res.json();
+
+        if(data.status === "ok"){
+
+            loginBoxEl.style.display = "none";
+            appEl.style.display = "block";
+
+            // เริ่มระบบหลักของคุณ
+            if(typeof init === "function"){
+                init();
+            }else if(typeof updateUI === "function"){
+                updateUI();
+            }
+
+            // ตรวจ License ทุก 30 วินาที
+            setInterval(async ()=>{
+                try{
+                    const r = await fetch(
+                        "https://morning-block-55bb.havanalanna.workers.dev/?user="
+                        + encodeURIComponent(user)
+                        + "&pass=" + encodeURIComponent(pass)
+                    );
+
+                    const j = await r.json();
+
+                    if(j.status !== "ok"){
+                        alert("⛔ License ถูกปิดใช้งาน");
+                        location.reload();
+                    }
+                }catch(e){
+                    console.log("License check error");
+                }
+            }, 30000);
+
+        }else{
+            loginErrEl.style.color = "#ff5555";
+            loginErrEl.textContent =
+                "User หรือ Password ไม่ถูกต้อง";
+        }
+
+    }catch(e){
+        loginErrEl.style.color = "#ff5555";
+        loginErrEl.textContent =
+            "ไม่สามารถเชื่อมต่อ License Server";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    document.getElementById("user").focus();
+});
+
+</script>
+
+</body>
+</html>
